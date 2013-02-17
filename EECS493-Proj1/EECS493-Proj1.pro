@@ -1,6 +1,6 @@
 #-------------------------------------------------
 #
-# Project created by QtCreator 2013-02-15T22:00:54
+# Project created by QtCreator 2013-02-17T15:28:39
 #
 #-------------------------------------------------
 
@@ -8,13 +8,17 @@ QT       += core gui
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-TARGET = 493-Proj1
+TARGET = EECS493-Proj1
 TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+    ../flickrcollector.cpp \
+    ../imagecollector.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+    ../flickrcollector.h \
+    ../imagecollector.h
 
 FORMS    += mainwindow.ui
