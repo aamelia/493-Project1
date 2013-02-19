@@ -87,7 +87,7 @@ FlickrCollector::FlickrCollector(QWidget *parent_incoming)
 
 
 /******  CHANGE THE API KEY HERE *********/
-const char *SEARCH_URL_START = "http://api.flickr.com/services/rest/?format=rest&method=flickr.interestingness.getList&per_page=10&api_key=YOUR-FLICKR-KEY-HERE&date=";
+const char *SEARCH_URL_START = "http://api.flickr.com/services/rest/?format=rest&method=flickr.interestingness.getList&per_page=10&api_key=b632049bd00935e5eefec131784e8f36&date=";
 
 const char *SEARCH_URL_END = "";
 
