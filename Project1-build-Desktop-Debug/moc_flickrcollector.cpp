@@ -1,13 +1,13 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'flickrcollector.h'
 **
-** Created: Mon Feb 18 13:40:54 2013
+** Created: Tue Feb 19 17:21:18 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.4)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../flickrcollector.h"
+#include "../Project1/flickrcollector.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'flickrcollector.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 63

@@ -1,13 +1,13 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'imagecollector.h'
 **
-** Created: Mon Feb 18 13:40:58 2013
+** Created: Tue Feb 19 17:21:22 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.4)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
 
-#include "../imagecollector.h"
+#include "../Project1/imagecollector.h"
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'imagecollector.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 63
