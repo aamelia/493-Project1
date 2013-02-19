@@ -179,7 +179,7 @@ QStringList FlickrCollector::list()
 void FlickrCollector::printList()
 {
   for (int i=0;i<itemList.size();i++)
-    cout << itemList.at(i).toStdString() << endl;
+   ;// cout << itemList.at(i).toStdString() << endl;
 }
 
 void FlickrCollector::parseDomTree(QDomElement subRoot)
@@ -265,7 +265,7 @@ void FlickrCollector::printDomTree(QDomElement subRoot)
 void FlickrCollector::printDomTreeSub(int level, QDomElement parentElement)
 {
   QDomNode node;
-
+/*
   node = parentElement.firstChild();
 
   while ( !node.isNull() )
@@ -288,6 +288,7 @@ void FlickrCollector::printDomTreeSub(int level, QDomElement parentElement)
       printDomTreeSub(level+1, body);
       node = node.nextSibling();
     }
+    */
 }
 
 
