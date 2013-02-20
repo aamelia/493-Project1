@@ -4,35 +4,24 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
-    QScopedPointer<QWidget> window(new QWidget);
-    QScopedPointer<QHBoxLayout> listMainImage(new QHBoxLayout);
-    QScopedPointer<QHBoxLayout> previewArea(new QHBoxLayout);
-    QScopedPointer<QVBoxLayout> combine (new QVBoxLayout);
+    QWidget *window = new QWidget;
+    QVBoxLayout *layout = new QVBoxLayout;
+    QHBoxLayout *topHalf = new QHBoxLayout;
 
-    QLabel *hello = new QLabel("Hello World");
-
+    QLabel *left = new QLabel("Left Side");
+    QLabel *bottom = new QLabel("Bottom");
+    bottom->setAlignment(Qt::AlignCenter);
     QLabel *mainImage = new QLabel;
     mainImage->setPixmap(QPixmap("/Users/MiaAtkinson/493Proj1/Project1/Chicago.jpg"));
-    listMainImage->addWidget(hello);
-    listMainImage->addWidget(mainImage);
+    mainImage->setFixedSize(900,600);
 
-    //*bottomScroll = new QScrollArea;
-    //*previewArea = new QHBoxLayout;
-    //bottomScroll->setWidget(previewArea);
-    //layout->addWidget(bottomScroll);
+    topHalf->addWidget(left);
+    topHalf->addWidget(mainImage);
+    layout->addLayout(topHalf);
+    layout->addWidget(bottom);
 
-    QLabel *previewImage = new QLabel;
-    previewImage->setPixmap(QPixmap("/Users/MiaAtkinson/493Proj1/Project1/Chicago.jpg"));
-    previewArea->addWidget(previewImage);
-
-    combine.addWidget(listMainImage);
-    combine.addWidget(previewArea);
-    window->setLayout(combine.data());
-    combine.take(); // ownership transferred
-
-    setCentralWidget(window.data());
-    QWidget *const windowPtr = window.take(); // ownership transferred
-    windowPtr->show();
+    window->setLayout(layout);
+    this->setCentralWidget(window);
  }
 
 MainWindow::~MainWindow()
