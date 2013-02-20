@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'imagecollector.h'
 **
-** Created: Tue Feb 19 17:21:22 2013
+** Created: Tue Feb 19 18:59:19 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.4)
 **
 ** WARNING! All changes made in this file will be lost!
