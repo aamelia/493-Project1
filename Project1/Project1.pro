@@ -15,8 +15,10 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     flickrcollector.cpp \
-    imagecollector.cpp
+    imagecollector.cpp \
+    previewarea.cpp
 
 HEADERS  += mainwindow.h \
     flickrcollector.h \
-    imagecollector.h
+    imagecollector.h \
+    previewarea.h
