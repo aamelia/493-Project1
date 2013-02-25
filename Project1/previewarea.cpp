@@ -29,7 +29,7 @@ QPixmap PreviewArea::previewItemAt(int location)
     //QLabel temp2;
     //temp2 = imgList[location];
     //temp = temp2->pixmap();
-    return imgList[location].pixmap();
+    //return imgList[location].pixmap();
 }
 
 void PreviewArea::setPreviewItemAt(int location, QPixmap temp)

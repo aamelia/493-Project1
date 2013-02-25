@@ -10,8 +10,10 @@ MainWindow::MainWindow(QWidget *parent)
     QMenuBar *menuBar = new QMenuBar();
     QMenu *fileMenu = menuBar->addMenu("File");
     QAction *temp;
-    temp = fileMenu->addAction("exit");
+    temp = fileMenu->addAction("Exit");
     connect(temp,SIGNAL(triggered()), this, SLOT(quit()));
+    temp->setEnabled(true);
+
     temp = fileMenu->addAction("Open");
     temp->setEnabled(false);
     temp = fileMenu->addAction("Save");
@@ -68,11 +70,19 @@ MainWindow::MainWindow(QWidget *parent)
     QVBoxLayout *layout = new QVBoxLayout;
     QHBoxLayout *topHalf = new QHBoxLayout;
     QListWidget *leftPanel = new QListWidget;
-    leftPanel->addItem(new QListWidgetItem("Item 1"));
-    leftPanel->addItem(new QListWidgetItem("Item 2"));
-    leftPanel->addItem(new QListWidgetItem("Item 3"));
-    leftPanel->addItem(new QListWidgetItem("Item 4"));
-
+    //leftPanel->addItem(new QListWidgetItem("Item 1"));
+    QListWidgetItem *item = new QListWidgetItem();
+    item->setFlags(item->flags() | Qt::ItemIsEditable);
+    item->setText("Item 1");
+    leftPanel->addItem(item);
+    QListWidgetItem *item2 = new QListWidgetItem();
+    item2->setFlags(item2->flags() | Qt::ItemIsEditable);
+    item2->setText("Item 2");
+    leftPanel->addItem(item2);
+    QListWidgetItem *item3 = new QListWidgetItem();
+    item3->setFlags(item3->flags() | Qt::ItemIsEditable);
+    item3->setText("Item 3");
+    leftPanel->addItem(item3);
     QLabel *mainImage = new QLabel;
     mainImage->setPixmap(QPixmap("/Users/MiaAtkinson/493Proj1/Project1/Chicago.jpg"));
     mainImage->setFixedSize(900,600);
@@ -109,6 +119,11 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     
+}
+
+void MainWindow::quit()
+{
+  QApplication::quit();
 }
 
 
