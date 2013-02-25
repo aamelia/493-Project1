@@ -5,6 +5,8 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
+    this->setWindowTitle("Amelia Atkinson - Project 1");
+    //Set up the menu bar
     QMenuBar *menuBar = new QMenuBar();
     QMenu *fileMenu = menuBar->addMenu("File");
     QAction *temp;
@@ -24,6 +26,19 @@ MainWindow::MainWindow(QWidget *parent)
     temp->setEnabled(false);
     temp = editMenu->addAction("Paste");
     temp->setEnabled(false);
+
+    /*
+    Create an instance of FlickrCollector.
+
+    3.  Call execute().  It will emit a ready() signal when it's finished
+        downloading.
+
+    4.  Get the list of urls as a QStringList by calling list().
+    */
+    //FlickrCollector *collector;
+    //collector->execute();
+
+    //FlickrCollector::connect(&collector, SIGNAL(ready()),&collector, SLOT(list()));
 
     QMenu *collectionMenu = menuBar->addMenu("Collection");
     temp = collectionMenu->addAction("New Collection");
@@ -58,6 +73,10 @@ MainWindow::MainWindow(QWidget *parent)
     QVBoxLayout *layout = new QVBoxLayout;
     QHBoxLayout *topHalf = new QHBoxLayout;
     QListWidget *leftPanel = new QListWidget;
+    leftPanel->addItem(new QListWidgetItem("Item 1"));
+    leftPanel->addItem(new QListWidgetItem("Item 2"));
+    leftPanel->addItem(new QListWidgetItem("Item 3"));
+    leftPanel->addItem(new QListWidgetItem("Item 4"));
 
 
     QLabel *left = new QLabel("Left Side");
@@ -65,6 +84,7 @@ MainWindow::MainWindow(QWidget *parent)
     mainImage->setPixmap(QPixmap("/Users/MiaAtkinson/493Proj1/Project1/Chicago.jpg"));
     mainImage->setFixedSize(900,600);
 
+    //This will later be a "PreviewArea"
     QScrollArea *bottom = new QScrollArea;
     QLabel *text1 = new QLabel("Text1");
     QLabel *text2 = new QLabel("Text2");

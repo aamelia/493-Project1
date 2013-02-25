@@ -1,7 +1,8 @@
 #include "previewarea.h"
-
 #include "mainwindow.h"
 #include <QtGui>
+#include <QMainWindow>
+
 
 #include <iostream>
 #include <string>
@@ -21,21 +22,22 @@ PreviewArea::~PreviewArea()
 
 }
 
-QPixmap PreviewArea::previewItemt(int)
-{
-}
-
-PreviewArea::setPreviewItemAt(int, QPixmap)
+QPixmap PreviewArea::previewItemAt(int location)
 {
 
 }
 
-PreviewArea::setPreviewItemEnabledAt(int, bool)
+void PreviewArea::setPreviewItemAt(int, QPixmap)
 {
 
 }
 
-PreviewArea::deletePreviewItemAt(int)
+void PreviewArea::setPreviewItemEnabledAt(int, bool)
+{
+
+}
+
+void PreviewArea::deletePreviewItemAt(int)
 {
 
 }
@@ -57,17 +59,18 @@ void timerTick(void)
 }
 
 //Signals
-void animationChanged(int location)
+void animationChanged(int)
 {
 
 }
 
-void previewItemChanged(int location)
+void previewItemChanged(int)
 {
 
 }
 
-void previewItemSelected(int location)
+void previewItemSelected(int)
 {
 
 }
+
