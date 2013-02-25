@@ -4,6 +4,8 @@
 #include <QMainWindow>
 class PreviewArea
 {
+    QList<QLabel> imgList;
+
 public:
     PreviewArea(int size, QWidget *parent=0);
     ~PreviewArea();

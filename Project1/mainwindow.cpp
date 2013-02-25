@@ -35,10 +35,12 @@ MainWindow::MainWindow(QWidget *parent)
 
     4.  Get the list of urls as a QStringList by calling list().
     */
-    //FlickrCollector *collector;
-    //collector->execute();
+    FlickrCollector *collector = new FlickrCollector(this);
 
-    //FlickrCollector::connect(&collector, SIGNAL(ready()),&collector, SLOT(list()));
+    connect(collector, SIGNAL(ready()), collector, SLOT(list()));
+    collector->execute();
+    //QStringList *tempList = collector->execute();
+    //QStringList
 
     QMenu *collectionMenu = menuBar->addMenu("Collection");
     temp = collectionMenu->addAction("New Collection");
@@ -62,13 +64,6 @@ MainWindow::MainWindow(QWidget *parent)
 
     this->setMenuBar(menuBar);
 
-    /*
-    temp = fileMenu->addAction("this writes to cout");
-    connect(temp, SIGNAL(triggered()), this, SLOT(writeMessage()));
-    temp = fileMenu->addAction("this really doesn't do anything");
-    temp->setEnabled(false);
-    */
-
     QWidget *window = new QWidget;
     QVBoxLayout *layout = new QVBoxLayout;
     QHBoxLayout *topHalf = new QHBoxLayout;
@@ -78,11 +73,17 @@ MainWindow::MainWindow(QWidget *parent)
     leftPanel->addItem(new QListWidgetItem("Item 3"));
     leftPanel->addItem(new QListWidgetItem("Item 4"));
 
-
-    QLabel *left = new QLabel("Left Side");
     QLabel *mainImage = new QLabel;
     mainImage->setPixmap(QPixmap("/Users/MiaAtkinson/493Proj1/Project1/Chicago.jpg"));
     mainImage->setFixedSize(900,600);
+
+    QUrl imageUrl("http://www.flickr.com/photos/mocoobaby/8505098497/");
+    //m_pImgCtrl = new FileDownloader(imageUrl, this);
+
+    //connect(m_pImgCtrl, SIGNAL(downloaded()), SLOT(loadImage()));
+
+    //QPixmap buttonImage;
+    //buttonImage.loadFromData(m_pImgCtrl->downloadedData());
 
     //This will later be a "PreviewArea"
     QScrollArea *bottom = new QScrollArea;

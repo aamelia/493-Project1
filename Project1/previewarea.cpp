@@ -13,26 +13,31 @@ using namespace std;
 //Public
 PreviewArea::PreviewArea(int size, QWidget *parent)
 {
-    size=10;
-    parent=0;
+    //size=10;
+    //parent=0;
+    QScrollArea *scroll = new QScrollArea;
+
 }
 
 PreviewArea::~PreviewArea()
 {
-
 }
 
 QPixmap PreviewArea::previewItemAt(int location)
 {
-
+    //QPixmap temp;
+    //QLabel temp2;
+    //temp2 = imgList[location];
+    //temp = temp2->pixmap();
+    return imgList[location].pixmap();
 }
 
-void PreviewArea::setPreviewItemAt(int, QPixmap)
+void PreviewArea::setPreviewItemAt(int location, QPixmap temp)
 {
-
+    //imgList[location] = temp;
 }
 
-void PreviewArea::setPreviewItemEnabledAt(int, bool)
+void PreviewArea::setPreviewItemEnabledAt(int location, bool enabled)
 {
 
 }
