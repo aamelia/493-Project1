@@ -6,14 +6,14 @@
 
 using namespace std;
 
-class PreviewArea : public QWidget
+class PreviewArea : public QScrollArea
 {
     Q_OBJECT
 
 private:
     QScrollArea *scrollArea;
     QWidget *container;
-    //QHBoxLayout *layout;
+    QHBoxLayout *layout;
     QListWidget *imgList;
 
 public:    

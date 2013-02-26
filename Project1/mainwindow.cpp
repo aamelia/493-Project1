@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent)
     imageWidget->setLayout(imgLayout);
 
     //Set up the bottom PreviewArea
-    PreviewArea *bottom = new PreviewArea();
+    PreviewArea *bottom = new PreviewArea(10, this);
 
     //Building the layout of the window
     QSplitter *splitter1 = new QSplitter(Qt::Horizontal, this);
