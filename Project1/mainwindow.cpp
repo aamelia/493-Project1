@@ -6,8 +6,63 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
 {
     this->setWindowTitle("Amelia Atkinson - Project 1");
-    //Set up the menu bar
-    QMenuBar *menuBar = new QMenuBar();
+    collector = new FlickrCollector(this);
+    leftPanel = new QListWidget;
+    menuBar = new QMenuBar();
+    imageWidget = new QWidget;
+    createMenus();
+    createFlickr();
+    this->setMenuBar(menuBar);
+
+    QHBoxLayout *imgLayout = new QHBoxLayout;
+    QLabel *mainImage = new QLabel;
+    mainImage->setPixmap(QPixmap("/Users/MiaAtkinson/493Proj1/Project1/Chicago.jpg"));
+    imgLayout->addWidget(mainImage);
+    imageWidget->setLayout(imgLayout);
+
+    //Set up the bottom PreviewArea
+    PreviewArea *bottom = new PreviewArea();
+
+    //Building the layout of the window
+    QSplitter *splitter1 = new QSplitter(Qt::Horizontal, this);
+    splitter1->addWidget(leftPanel);
+    splitter1->addWidget(imageWidget);
+    splitter1->setOpaqueResize(true);
+    splitter1->setChildrenCollapsible(true);
+    QSplitter *splitter2 = new QSplitter(Qt::Vertical, this);
+    splitter2->setChildrenCollapsible(true);
+    splitter2->addWidget(splitter1);
+    splitter2->addWidget(bottom);
+    setCentralWidget(splitter2);
+ }
+
+MainWindow::~MainWindow(){}
+
+void MainWindow::quit()
+{
+  QApplication::quit();
+}
+
+void MainWindow::flickrCallback(void)
+{
+    urlList = collector->list(); //this goes in the callback function
+    cout << "Flickr Callback Function" << endl;
+    QListWidgetItem *collectionItem = new QListWidgetItem();
+    collectionItem->setFlags(collectionItem->flags() | Qt::ItemIsEditable);
+    collectionItem->setText(collector->collectionName());
+    leftPanel->addItem(collectionItem);
+}
+
+void MainWindow::createFlickr(void)
+{
+    cout<< "Created Instance" << endl;
+    FlickrCollector *collector = new FlickrCollector(this);
+    connect(collector, SIGNAL(ready()), this, SLOT(flickrCallback()));
+    collector->execute();
+}
+
+void MainWindow::createMenus()
+{
     QMenu *fileMenu = menuBar->addMenu("File");
     QAction *temp;
     temp = fileMenu->addAction("Exit");
@@ -28,25 +83,10 @@ MainWindow::MainWindow(QWidget *parent)
     temp->setEnabled(false);
     temp = editMenu->addAction("Paste");
     temp->setEnabled(false);
-
-    /*
-    Create an instance of FlickrCollector.
-
-    3.  Call execute().  It will emit a ready() signal when it's finished
-        downloading.
-
-    4.  Get the list of urls as a QStringList by calling list().
-    */
-    FlickrCollector *collector = new FlickrCollector(this);
-
-    connect(collector, SIGNAL(ready()), collector, SLOT(list()));
-    collector->execute();
-    //QStringList *tempList = collector->execute();
-    //QStringList
-
     QMenu *collectionMenu = menuBar->addMenu("Collection");
     temp = collectionMenu->addAction("New Collection");
-    temp->setEnabled(false);
+    temp->setEnabled(true);
+    connect(temp,SIGNAL(triggered()), this, SLOT(createFlickr()));
     temp = collectionMenu->addAction("New Collection By Tags");
     temp->setEnabled(false);
     temp = collectionMenu->addAction("Play Collection");
@@ -63,67 +103,6 @@ MainWindow::MainWindow(QWidget *parent)
     temp->setEnabled(false);
     temp = toolsMenu->addAction("Set Play Interval");
     temp->setEnabled(false);
-
-    this->setMenuBar(menuBar);
-
-    QWidget *window = new QWidget;
-    QVBoxLayout *layout = new QVBoxLayout;
-    QHBoxLayout *topHalf = new QHBoxLayout;
-    QListWidget *leftPanel = new QListWidget;
-    //leftPanel->addItem(new QListWidgetItem("Item 1"));
-    QListWidgetItem *item = new QListWidgetItem();
-    item->setFlags(item->flags() | Qt::ItemIsEditable);
-    item->setText("Item 1");
-    leftPanel->addItem(item);
-    QListWidgetItem *item2 = new QListWidgetItem();
-    item2->setFlags(item2->flags() | Qt::ItemIsEditable);
-    item2->setText("Item 2");
-    leftPanel->addItem(item2);
-    QListWidgetItem *item3 = new QListWidgetItem();
-    item3->setFlags(item3->flags() | Qt::ItemIsEditable);
-    item3->setText("Item 3");
-    leftPanel->addItem(item3);
-    QLabel *mainImage = new QLabel;
-    mainImage->setPixmap(QPixmap("/Users/MiaAtkinson/493Proj1/Project1/Chicago.jpg"));
-    mainImage->setFixedSize(900,600);
-
-    QUrl imageUrl("http://www.flickr.com/photos/mocoobaby/8505098497/");
-    //m_pImgCtrl = new FileDownloader(imageUrl, this);
-
-    //connect(m_pImgCtrl, SIGNAL(downloaded()), SLOT(loadImage()));
-
-    //QPixmap buttonImage;
-    //buttonImage.loadFromData(m_pImgCtrl->downloadedData());
-
-    //This will later be a "PreviewArea"
-    QScrollArea *bottom = new QScrollArea;
-    QLabel *text1 = new QLabel("Text1");
-    QLabel *text2 = new QLabel("Text2");
-
-
-
-    QHBoxLayout *previewArea = new QHBoxLayout;
-    previewArea->addWidget(text1);
-    previewArea->addWidget(text2);
-    bottom->setLayout(previewArea);
-
-    topHalf->addWidget(leftPanel);
-    topHalf->addWidget(mainImage);
-    layout->addLayout(topHalf);
-    layout->addWidget(bottom);
-
-    window->setLayout(layout);
-    this->setCentralWidget(window);
- }
-
-MainWindow::~MainWindow()
-{
-    
-}
-
-void MainWindow::quit()
-{
-  QApplication::quit();
 }
 
 

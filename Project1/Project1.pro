@@ -10,7 +10,7 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = Project1
 TEMPLATE = app
-
+CONFIG -= x86_64
 
 SOURCES += main.cpp\
         mainwindow.cpp \

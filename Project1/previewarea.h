@@ -2,12 +2,22 @@
 #define PREVIEWAREA_H
 #include <QtGui>
 #include <QMainWindow>
-class PreviewArea
-{
-    QList<QLabel> imgList;
+#include <QWidget>
 
-public:
-    PreviewArea(int size, QWidget *parent=0);
+using namespace std;
+
+class PreviewArea : public QWidget
+{
+    Q_OBJECT
+
+private:
+    QScrollArea *scrollArea;
+    QWidget *container;
+    //QHBoxLayout *layout;
+    QListWidget *imgList;
+
+public:    
+    PreviewArea(int size=10, QWidget *parent=0);
     ~PreviewArea();
     QPixmap previewItemAt(int);
     void setPreviewItemAt(int, QPixmap);
@@ -20,9 +30,9 @@ public slots:
     void timerTick(void);
 
 signals:
-    void animationChanged(int location);
-    void previewItemChanged(int location);
-    void previewItemSelected(int location);
+    void animationChanged(int);
+    void previewItemChanged(int);
+    void previewItemSelected(int);
 
 };
 
