@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include "flickrcollector.h"
+#include "imagecollector.h"
 #include "previewarea.h"
 
 class MainWindow : public QMainWindow
@@ -18,6 +19,7 @@ public slots:
   void flickrCallback(void);
   void createFlickr();
   void createMenus();
+  void processDownloadedPics(QPixmap);
 
 private:
   FlickrCollector *collector;
@@ -27,6 +29,7 @@ private:
   QWidget *imageWidget;
   QWidget *leftPanelContainer;
   QWidget *bottomContainer;
+  PreviewArea *bottom;
 
 };
 

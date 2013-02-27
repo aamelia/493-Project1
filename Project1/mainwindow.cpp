@@ -26,7 +26,10 @@ MainWindow::MainWindow(QWidget *parent)
     leftPanelContainer->setLayout(leftPanelLayout);
 
     //Set up the bottom PreviewArea
-    PreviewArea *bottom = new PreviewArea(10, this);
+    //QPixmap monacle = QPixmap("/Users/MiaAtkinson/Desktop/Monacle.jpg");
+    bottom = new PreviewArea(10, this);
+    //bottom->setPreviewItemAt(2, monacle);
+    //bottom->deletePreviewItemAt(2);
     QVBoxLayout *anotherLayout = new QVBoxLayout();
     anotherLayout->addWidget(bottom);
     bottomContainer = new QWidget();
@@ -40,7 +43,6 @@ MainWindow::MainWindow(QWidget *parent)
     splitter1->setOpaqueResize(true);
     splitter1->setChildrenCollapsible(true);
     QSplitter *splitter2 = new QSplitter(Qt::Vertical, this);
-    splitter2->setChildrenCollapsible(true);
     splitter2->addWidget(splitter1);
     splitter2->addWidget(bottomContainer);
     setCentralWidget(splitter2);
@@ -55,12 +57,30 @@ void MainWindow::quit()
 
 void MainWindow::flickrCallback(void)
 {
-    urlList = collector->list(); //this goes in the callback function
+    urlList = collector->list();
     cout << "Flickr Callback Function" << endl;
     QListWidgetItem *collectionItem = new QListWidgetItem();
     collectionItem->setFlags(collectionItem->flags() | Qt::ItemIsEditable);
     collectionItem->setText(collector->collectionName());
     leftPanel->addItem(collectionItem);
+    //add items from the list to the PreviewArea
+
+    ImageCollector *image = new ImageCollector();
+    connect(image, SIGNAL(pixmapAvailable(QPixmap)), this, SLOT(processDownloadedPics(QPixmap)));
+    QString url;
+    urlList.append("http://www.flickr.com/photos/tlrbrt/8511358139/");
+    cout << "The size of QList is: " << urlList.size() << endl;
+    int size = urlList.size();
+    for(int i=0; i<size; i++)
+    {
+        url = urlList.at(i);
+        image->loadImage(url);
+    }
+}
+
+void MainWindow::processDownloadedPics(QPixmap temp)
+{
+    bottom->setPreviewItemAt(0, temp);
 }
 
 void MainWindow::createFlickr(void)

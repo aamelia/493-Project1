@@ -15,7 +15,7 @@ PreviewArea::PreviewArea (int size, QWidget *parent)
     container = new QWidget;
     layout = new QHBoxLayout();
 
-    for(int i=0; i<10; i++)
+    for(int i=0; i<3; i++)
     {
         QLabel *temp = new QLabel();
         temp->setPixmap(QPixmap("/Users/MiaAtkinson/493Proj1/Project1/Chicago.jpg"));
@@ -55,9 +55,12 @@ void PreviewArea::setPreviewItemEnabledAt(int location, bool enabled)
 
 }
 
-void PreviewArea::deletePreviewItemAt(int)
+void PreviewArea::deletePreviewItemAt(int location)
 {
-
+    QLayoutItem *temp;// = new QWidgetItem();
+    temp=layout->itemAt(location);
+    layout->removeItem(temp);
+    delete temp;
 }
 
 //Public slots
