@@ -25,6 +25,8 @@ private:
   QListWidget *leftPanel;
   QMenuBar *menuBar;
   QWidget *imageWidget;
+  QWidget *leftPanelContainer;
+  QWidget *bottomContainer;
 
 };
 

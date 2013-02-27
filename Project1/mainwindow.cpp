@@ -20,19 +20,29 @@ MainWindow::MainWindow(QWidget *parent)
     imgLayout->addWidget(mainImage);
     imageWidget->setLayout(imgLayout);
 
+    QVBoxLayout *leftPanelLayout = new QVBoxLayout();
+    leftPanelLayout->addWidget(leftPanel);
+    leftPanelContainer = new QWidget();
+    leftPanelContainer->setLayout(leftPanelLayout);
+
     //Set up the bottom PreviewArea
     PreviewArea *bottom = new PreviewArea(10, this);
+    QVBoxLayout *anotherLayout = new QVBoxLayout();
+    anotherLayout->addWidget(bottom);
+    bottomContainer = new QWidget();
+    bottomContainer->setLayout(anotherLayout);
+
 
     //Building the layout of the window
     QSplitter *splitter1 = new QSplitter(Qt::Horizontal, this);
-    splitter1->addWidget(leftPanel);
+    splitter1->addWidget(leftPanelContainer);
     splitter1->addWidget(imageWidget);
     splitter1->setOpaqueResize(true);
     splitter1->setChildrenCollapsible(true);
     QSplitter *splitter2 = new QSplitter(Qt::Vertical, this);
     splitter2->setChildrenCollapsible(true);
     splitter2->addWidget(splitter1);
-    splitter2->addWidget(bottom);
+    splitter2->addWidget(bottomContainer);
     setCentralWidget(splitter2);
  }
 

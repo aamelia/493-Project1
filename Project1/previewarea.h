@@ -14,7 +14,7 @@ private:
     QScrollArea *scrollArea;
     QWidget *container;
     QHBoxLayout *layout;
-    QListWidget *imgList;
+    //QListWidget *imgList;
 
 public:    
     PreviewArea(int size=10, QWidget *parent=0);
