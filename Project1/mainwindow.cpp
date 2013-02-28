@@ -10,13 +10,21 @@ MainWindow::MainWindow(QWidget *parent)
     leftPanel = new QListWidget;
     menuBar = new QMenuBar();
     imageWidget = new QWidget;
+    collector = new FlickrCollector(this);
+    connect(collector, SIGNAL(ready()), this, SLOT(flickrCallback()));
+
+    //collectionItem = new QListWidgetItem();
+    //collectionItem->setFlags(collectionItem->flags() | Qt::ItemIsEditable);
+    //collectionItem->setText(collector->collectionName());
+
     createMenus();
     createFlickr();
     this->setMenuBar(menuBar);
 
     QHBoxLayout *imgLayout = new QHBoxLayout;
-    QLabel *mainImage = new QLabel;
-    mainImage->setPixmap(QPixmap("/Users/MiaAtkinson/493Proj1/Project1/Chicago.jpg"));
+    mainImage = new QLabel;
+    //setMainImage(mainImage);
+
     imgLayout->addWidget(mainImage);
     imageWidget->setLayout(imgLayout);
 
@@ -26,10 +34,7 @@ MainWindow::MainWindow(QWidget *parent)
     leftPanelContainer->setLayout(leftPanelLayout);
 
     //Set up the bottom PreviewArea
-    //QPixmap monacle = QPixmap("/Users/MiaAtkinson/Desktop/Monacle.jpg");
     bottom = new PreviewArea(10, this);
-    //bottom->setPreviewItemAt(2, monacle);
-    //bottom->deletePreviewItemAt(2);
     QVBoxLayout *anotherLayout = new QVBoxLayout();
     anotherLayout->addWidget(bottom);
     bottomContainer = new QWidget();
@@ -57,25 +62,29 @@ void MainWindow::quit()
 
 void MainWindow::flickrCallback(void)
 {
+    cout << "FlickrCallback" << endl;
     urlList = collector->list();
-    cout << "Flickr Callback Function" << endl;
     QListWidgetItem *collectionItem = new QListWidgetItem();
     collectionItem->setFlags(collectionItem->flags() | Qt::ItemIsEditable);
     collectionItem->setText(collector->collectionName());
     leftPanel->addItem(collectionItem);
-    //add items from the list to the PreviewArea
 
     ImageCollector *image = new ImageCollector();
     connect(image, SIGNAL(pixmapAvailable(QPixmap)), this, SLOT(processDownloadedPics(QPixmap)));
     QString url;
-    urlList.append("http://www.flickr.com/photos/tlrbrt/8511358139/");
-    cout << "The size of QList is: " << urlList.size() << endl;
+    connect(bottom, SIGNAL(animationChanged(int)), this, SLOT(resetMainImage(int)));
     int size = urlList.size();
+
     for(int i=0; i<size; i++)
     {
         url = urlList.at(i);
         image->loadImage(url);
     }
+}
+void MainWindow::resetMainImage(int location)
+{
+    mainImage->setPixmap(bottom->previewItemAt(location));
+    //mainImage->setPixmap(QPixmap("/Users/MiaAtkinson/493Proj1/Project1/Chicago.jpg"));
 }
 
 void MainWindow::processDownloadedPics(QPixmap temp)
@@ -83,11 +92,14 @@ void MainWindow::processDownloadedPics(QPixmap temp)
     bottom->setPreviewItemAt(0, temp);
 }
 
+void MainWindow::setMainImage(QLabel *current)
+{
+    current->setPixmap(bottom->previewItemAt(0));
+}
+
 void MainWindow::createFlickr(void)
 {
     cout<< "Created Instance" << endl;
-    FlickrCollector *collector = new FlickrCollector(this);
-    connect(collector, SIGNAL(ready()), this, SLOT(flickrCallback()));
     collector->execute();
 }
 

@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include <QWidget>
 
+
 using namespace std;
 
 class PreviewArea : public QScrollArea
@@ -14,7 +15,9 @@ private:
     QScrollArea *scrollArea;
     QWidget *container;
     QHBoxLayout *layout;
-    //QListWidget *imgList;
+    QTimer *timer;
+    int itemNum;
+    int timerInterval;
 
 public:    
     PreviewArea(int size=10, QWidget *parent=0);

@@ -152,6 +152,7 @@ void FlickrCollector::downloadFinished(QNetworkReply *reply)
 
       parseDomTree(root);
       //	  domTree->deleteLater();
+      cout << "Emitting ready" << endl;
       emit ready();
     }
     }

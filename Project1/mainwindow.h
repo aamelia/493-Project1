@@ -20,6 +20,8 @@ public slots:
   void createFlickr();
   void createMenus();
   void processDownloadedPics(QPixmap);
+  void setMainImage(QLabel*);
+  void resetMainImage(int);
 
 private:
   FlickrCollector *collector;
@@ -30,7 +32,12 @@ private:
   QWidget *leftPanelContainer;
   QWidget *bottomContainer;
   PreviewArea *bottom;
+  QLabel *mainImage;
 
+  struct Collection {
+  QString collectionName;
+  QStringList collectionUrls;
+  };
 };
 
 #endif // MAINWINDOW_H

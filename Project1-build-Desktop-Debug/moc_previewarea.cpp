@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'previewarea.h'
 **
-** Created: Tue Feb 26 16:55:45 2013
+** Created: Wed Feb 27 23:13:14 2013
 **      by: The Qt Meta Object Compiler version 63 (Qt 4.8.4)
 **
 ** WARNING! All changes made in this file will be lost!
