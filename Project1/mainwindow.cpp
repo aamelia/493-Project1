@@ -18,12 +18,10 @@ MainWindow::MainWindow(QWidget *parent)
     //collectionItem->setText(collector->collectionName());
 
     createMenus();
-    createFlickr();
     this->setMenuBar(menuBar);
 
     QHBoxLayout *imgLayout = new QHBoxLayout;
     mainImage = new QLabel;
-    //setMainImage(mainImage);
 
     imgLayout->addWidget(mainImage);
     imageWidget->setLayout(imgLayout);
@@ -51,6 +49,9 @@ MainWindow::MainWindow(QWidget *parent)
     splitter2->addWidget(splitter1);
     splitter2->addWidget(bottomContainer);
     setCentralWidget(splitter2);
+
+    createFlickr();
+    //createFlickr();
  }
 
 MainWindow::~MainWindow(){}
@@ -62,23 +63,32 @@ void MainWindow::quit()
 
 void MainWindow::flickrCallback(void)
 {
-    cout << "FlickrCallback" << endl;
     urlList = collector->list();
-    QListWidgetItem *collectionItem = new QListWidgetItem();
-    collectionItem->setFlags(collectionItem->flags() | Qt::ItemIsEditable);
-    collectionItem->setText(collector->collectionName());
-    leftPanel->addItem(collectionItem);
-
-    ImageCollector *image = new ImageCollector();
-    connect(image, SIGNAL(pixmapAvailable(QPixmap)), this, SLOT(processDownloadedPics(QPixmap)));
-    QString url;
-    connect(bottom, SIGNAL(animationChanged(int)), this, SLOT(resetMainImage(int)));
-    int size = urlList.size();
-
-    for(int i=0; i<size; i++)
+    if(urlList.size()==0)
     {
-        url = urlList.at(i);
-        image->loadImage(url);
+        createFlickr();
+    }
+    else
+    {
+        Collection *newCollection = new Collection();
+        newCollection->collectionName = collector->collectionName();
+        newCollection->collectionURLs = urlList;
+
+        QListWidgetItem *collectionItem = new QListWidgetItem();
+        collectionItem->setFlags(collectionItem->flags() | Qt::ItemIsEditable);
+        collectionItem->setText(collector->collectionName());
+        leftPanel->addItem(collectionItem);
+
+        ImageCollector *image = new ImageCollector();
+        connect(image, SIGNAL(pixmapAvailable(QPixmap)), this, SLOT(processDownloadedPics(QPixmap)));
+        QString url;
+        connect(bottom, SIGNAL(animationChanged(int)), this, SLOT(resetMainImage(int)));
+        int size = urlList.size();
+        for(int i=0; i<size; i++)
+        {
+            url = urlList.at(i);
+            image->loadImage(url);
+        }
     }
 }
 void MainWindow::resetMainImage(int location)
@@ -90,11 +100,6 @@ void MainWindow::resetMainImage(int location)
 void MainWindow::processDownloadedPics(QPixmap temp)
 {
     bottom->setPreviewItemAt(0, temp);
-}
-
-void MainWindow::setMainImage(QLabel *current)
-{
-    current->setPixmap(bottom->previewItemAt(0));
 }
 
 void MainWindow::createFlickr(void)

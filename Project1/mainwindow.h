@@ -20,7 +20,6 @@ public slots:
   void createFlickr();
   void createMenus();
   void processDownloadedPics(QPixmap);
-  void setMainImage(QLabel*);
   void resetMainImage(int);
 
 private:
@@ -36,8 +35,10 @@ private:
 
   struct Collection {
   QString collectionName;
-  QStringList collectionUrls;
+  QStringList collectionURLs;
   };
+
+  vector <Collection> allCollections();
 };
 
 #endif // MAINWINDOW_H

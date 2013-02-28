@@ -16,7 +16,7 @@ PreviewArea::PreviewArea (int size, QWidget *parent)
     itemNum = 0;
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(timerTick()));
-    startAnimation(1000);
+    startAnimation(5000);
 
     container = new QWidget;
     layout = new QHBoxLayout();
@@ -43,7 +43,6 @@ PreviewArea::~PreviewArea()
 QPixmap PreviewArea::previewItemAt(int location)
 {
     QWidget *temp = layout->itemAt(location)->widget();
-    //return *QLabel(layout->itemAt(location)->widget()).pixmap();
     QLabel *temp2 = qobject_cast<QLabel *>(temp);
     QPixmap temp3 = QPixmap(*temp2->pixmap());
     return temp3;
