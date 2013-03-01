@@ -18,6 +18,7 @@ private:
     QTimer *timer;
     int itemNum;
     int timerInterval;
+    vector<QLabel *> myLabels;
 
 public:    
     PreviewArea(int size=10, QWidget *parent=0);

@@ -94,15 +94,9 @@ QPixmap PreviewArea::previewItemAt(int location)
     QWidget *temp = layout->itemAt(location)->widget();
     QLabel *temp2  = new QLabel;
     temp2 = qobject_cast<QLabel *>(temp);
-
-    cout << "trying to view item " << location << endl;
-
     QPixmap temp3 = QPixmap();
     temp3 = QPixmap(*temp2->pixmap());
-    cout << location << endl;
     setPreviewItemEnabledAt(location, true);
-
-    cout << "return" << endl;
     return temp3;
 
 
