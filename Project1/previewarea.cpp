@@ -45,28 +45,16 @@ PreviewArea::PreviewArea (int size, QWidget *parent)
     QPixmap michigan;
     michigan = QPixmap("/Users/MiaAtkinson/493Proj1/Project1/Chicago.jpg");
     michigan.scaled(100, 100, Qt::KeepAspectRatio);
-    QPixmap winter = QPixmap("/Users/MiaAtkinson/Desktop/Winter '13");
-    winter.scaled(100, 100, Qt::KeepAspectRatio);
 
-    item1->setPixmap(michigan);
     item1->setScaledContents(true);
-    //item2->setPixmap(winter);
     item2->setScaledContents(true);
-    //item3->setPixmap(michigan);
     item3->setScaledContents(true);
-    //item4->setPixmap(winter);
     item4->setScaledContents(true);
-    //item5->setPixmap(michigan);
     item5->setScaledContents(true);
-    //item6->setPixmap(winter);
     item6->setScaledContents(true);
-    //item7->setPixmap(michigan);
     item7->setScaledContents(true);
-    //item8->setPixmap(winter);
     item8->setScaledContents(true);
-    //item9->setPixmap(michigan);
     item9->setScaledContents(true);
-    //item10->setPixmap(winter);
     item10->setScaledContents(true);
 
     layout->addWidget(item1);
@@ -80,20 +68,8 @@ PreviewArea::PreviewArea (int size, QWidget *parent)
     layout->addWidget(item9);
     layout->addWidget(item10);
 
-
-
-    /*
-    for(int i=0; i<1; i++)
-    {
-        QLabel *temp = new QLabel();
-        temp->setPixmap(QPixmap("/Users/MiaAtkinson/493Proj1/Project1/Chicago.jpg"));
-
-        temp->setFixedSize(100,100);
-        temp->setScaledContents(true);
-        //layout->addWidget(temp);
-    }
-*/
     container->setLayout(layout);
+    container->setMaximumHeight(110);
     this->setWidget(container);
 }
 
@@ -114,12 +90,6 @@ QPixmap PreviewArea::previewItemAt(int location)
 void PreviewArea::setPreviewItemAt(int location, QPixmap temp)
 {
     temp.scaled(100, 100, Qt::KeepAspectRatio);
-
-    //QLabel *tempLabel = new QLabel();
-    //tempLabel->setScaledContents(true);
-    //temp.scaled(100, 100, Qt::KeepAspectRatio);
-    //tempLabel->setFixedSize(100,100);
-
     QWidget *tempW = layout->itemAt(location)->widget();
     QLabel *temp2 = qobject_cast<QLabel *>(tempW);
     temp2->setScaledContents(true);
@@ -146,6 +116,7 @@ void PreviewArea::setPreviewItemEnabledAt(int location, bool enabled)
     layout->insertWidget(location-1, tres);
     cout << "disabling border of " << location-1 << endl;
     */
+
 }
 
 void PreviewArea::deletePreviewItemAt(int location)
@@ -157,7 +128,8 @@ void PreviewArea::deletePreviewItemAt(int location)
 //Public slots
 void PreviewArea :: startAnimation(int timerInterval)
 {
-    timer->start(timerInterval);
+
+    timer->start(2000);
 }
 
 void PreviewArea :: stopAnimation()

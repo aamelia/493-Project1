@@ -15,20 +15,17 @@ MainWindow::MainWindow(QWidget *parent)
     connect(collector, SIGNAL(ready()), this, SLOT(flickrCallback()));
     image = new ImageCollector();
     connect(image, SIGNAL(pixmapAvailable(QPixmap)), this, SLOT(processDownloadedPics(QPixmap)));
+    currentCollection=0;
     numCollections=0;
-
-    connect(this, SIGNAL(replaceBottom()), this, SLOT(replacingBottom()));
-    //connect(this, SIGNAL(), this, SLOT());
-
-    //collectionItem = new QListWidgetItem();
-    //collectionItem->setFlags(collectionItem->flags() | Qt::ItemIsEditable);
-    //collectionItem->setText(collector->collectionName());
 
     QHBoxLayout *imgLayout = new QHBoxLayout;
     mainImage = new QLabel;
+    mainImage->setMaximumSize(350, 350);
+    mainImage->setScaledContents(true);
 
     imgLayout->addWidget(mainImage);
     imageWidget->setLayout(imgLayout);
+    //imageWidget->setSizePolicy(QSizePolicy::Expanding);
 
     QVBoxLayout *leftPanelLayout = new QVBoxLayout();
     leftPanelLayout->addWidget(leftPanel);
@@ -36,7 +33,6 @@ MainWindow::MainWindow(QWidget *parent)
     leftPanelContainer->setLayout(leftPanelLayout);
 
     //Set up the bottom PreviewArea
-    //bottom = new PreviewArea(10, this);
     bottom = new PreviewArea();
     QVBoxLayout *anotherLayout = new QVBoxLayout();
     anotherLayout->addWidget(bottom);
@@ -50,15 +46,17 @@ MainWindow::MainWindow(QWidget *parent)
     splitter1->addWidget(imageWidget);
     splitter1->setOpaqueResize(true);
     splitter1->setChildrenCollapsible(true);
-    //give this porportion
-    //splitter1->setSizes();
-    //label centered
+    QList<int> tempList;
+    tempList.insert(0, 500);
+    tempList.insert(0, 200);
+    splitter1->setSizes(tempList);
     //mainWindow size policy to prefered
 
-    allCollections = new vector<FlickrCollector>;
+    //allCollections = new vector<QStringList>;
     QSplitter *splitter2 = new QSplitter(Qt::Vertical, this);
     splitter2->addWidget(splitter1);
     splitter2->addWidget(bottomContainer);
+
     setCentralWidget(splitter2);
 
     createFlickr();
@@ -73,10 +71,20 @@ void MainWindow::quit()
   QApplication::quit();
 }
 
+void MainWindow::resetCollection(int collectionNumber)
+{
+    urlList = allCollections[collectionNumber];
+    int size = urlList.size();
+    QString url;
+    for(int i=0; i<size; i++)
+    {
+        url = urlList.at(i);
+        image->loadImage(url);
+    }
+}
+
 void MainWindow::flickrCallback(void)
 {
-    PreviewArea *empty = new PreviewArea();
-    tempBottom = empty;
     urlList = collector->list();
     if(urlList.size()==0)
     {
@@ -85,10 +93,7 @@ void MainWindow::flickrCallback(void)
     }
     else
     {
-        //Collection newCollection;
-        //newCollection.collectionName = collector->collectionName();
-        //newCollection.collectionURLs = urlList;
-        //allCollections->push_back(newCollection);
+        allCollections.push_back(urlList);
 
         QListWidgetItem *collectionItem = new QListWidgetItem();
         collectionItem->setFlags(collectionItem->flags() | Qt::ItemIsEditable);
@@ -103,14 +108,11 @@ void MainWindow::flickrCallback(void)
             url = urlList.at(i);
             image->loadImage(url);
         }
-        emit(replaceBottom());
-
     }
 }
 void MainWindow::resetMainImage(int location)
 {
     mainImage->setPixmap(bottom->previewItemAt(location));
-
 }
 
 void MainWindow::processDownloadedPics(QPixmap temp)
@@ -119,11 +121,6 @@ void MainWindow::processDownloadedPics(QPixmap temp)
     photoCounter++;
     if(photoCounter == 10)
         photoCounter = 0;
-}
-
-void MainWindow::replacingBottom()
-{
-
 }
 
 void MainWindow::createFlickr(void)
@@ -162,7 +159,7 @@ void MainWindow::createMenus()
     temp = collectionMenu->addAction("New Collection By Tags");
     temp->setEnabled(false);
     temp = collectionMenu->addAction("Play Collection");
-    //connect(temp, SIGNAL(triggered()), bottom, SLOT(startAnimation()));
+    connect(temp, SIGNAL(triggered()), this, SLOT(mainStartAnimation()));
     temp->setEnabled(true);
     temp = collectionMenu->addAction("Delete Collection");
     temp->setEnabled(false);
@@ -179,4 +176,15 @@ void MainWindow::createMenus()
     temp->setEnabled(false);
 }
 
+void MainWindow::mainStartAnimation()
+{
+    if( leftPanel->currentRow() != -1)
+        if(currentCollection != leftPanel->currentRow())
+        {
+            resetCollection(leftPanel->currentRow());
+            currentCollection = leftPanel->currentRow();
+        }
+
+    bottom->startAnimation(leftPanel->currentRow());
+}
 

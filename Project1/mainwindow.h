@@ -20,8 +20,9 @@ public slots:
   void createFlickr();
   void createMenus();
   void processDownloadedPics(QPixmap);
-  void resetMainImage(int);
-  void replacingBottom();
+  void resetMainImage(int location);
+  void mainStartAnimation();
+  void resetCollection(int collectionNumber);
 
 private:
   FlickrCollector *collector;
@@ -32,13 +33,13 @@ private:
   QWidget *leftPanelContainer;
   QWidget *bottomContainer;
   PreviewArea *bottom;
-  PreviewArea *tempBottom;
   QLabel *mainImage;
   ImageCollector *image;
+  int currentCollection;
   int numCollections;
   int photoCounter;
 
-  vector<FlickrCollector> *allCollections;
+  vector<QStringList> allCollections;
 
 signals:
   void replaceBottom();
