@@ -21,6 +21,7 @@ public slots:
   void createMenus();
   void processDownloadedPics(QPixmap);
   void resetMainImage(int);
+  void replacingBottom();
 
 private:
   FlickrCollector *collector;
@@ -31,14 +32,16 @@ private:
   QWidget *leftPanelContainer;
   QWidget *bottomContainer;
   PreviewArea *bottom;
+  PreviewArea *tempBottom;
   QLabel *mainImage;
+  ImageCollector *image;
+  int numCollections;
+  int photoCounter;
 
-  struct Collection {
-  QString collectionName;
-  QStringList collectionURLs;
-  };
+  vector<FlickrCollector> *allCollections;
 
-  vector <Collection> allCollections();
+signals:
+  void replaceBottom();
 };
 
 #endif // MAINWINDOW_H
