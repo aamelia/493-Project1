@@ -20,16 +20,20 @@ MainWindow::MainWindow(QWidget *parent)
 
     QHBoxLayout *imgLayout = new QHBoxLayout;
     mainImage = new QLabel;
-    mainImage->setMaximumSize(350, 350);
+    //mainImage->setMaximumSize(350, 350);
     mainImage->setScaledContents(true);
 
+    mainImage->setMaximumSize(350,350);
     imgLayout->addWidget(mainImage);
     imageWidget->setLayout(imgLayout);
+    //imageWidget->setFixedSize(400,400);
+    //imageWidget->setMaximumSize(400,400);
     //imageWidget->setSizePolicy(QSizePolicy::Expanding);
 
     QVBoxLayout *leftPanelLayout = new QVBoxLayout();
     leftPanelLayout->addWidget(leftPanel);
     leftPanelContainer = new QWidget();
+    leftPanelContainer->setMinimumWidth(150);
     leftPanelContainer->setLayout(leftPanelLayout);
 
     //Set up the bottom PreviewArea
@@ -38,6 +42,7 @@ MainWindow::MainWindow(QWidget *parent)
     anotherLayout->addWidget(bottom);
     bottomContainer = new QWidget();
     bottomContainer->setLayout(anotherLayout);
+    bottomContainer->setFixedHeight(160);
 
 
     //Building the layout of the window
@@ -109,6 +114,7 @@ void MainWindow::flickrCallback(void)
             image->loadImage(url);
         }
     }
+    currentCollection = leftPanel->count()-1;
 }
 void MainWindow::resetMainImage(int location)
 {
@@ -179,11 +185,13 @@ void MainWindow::createMenus()
 void MainWindow::mainStartAnimation()
 {
     if( leftPanel->currentRow() != -1)
+    {
         if(currentCollection != leftPanel->currentRow())
         {
             resetCollection(leftPanel->currentRow());
             currentCollection = leftPanel->currentRow();
         }
+    }
 
     bottom->startAnimation(leftPanel->currentRow());
 }

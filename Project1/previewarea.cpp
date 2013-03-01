@@ -82,8 +82,11 @@ QPixmap PreviewArea::previewItemAt(int location)
     QWidget *temp = layout->itemAt(location)->widget();
     QLabel *temp2 = qobject_cast<QLabel *>(temp);
     QPixmap temp3 = QPixmap(*temp2->pixmap());
+    cout << location << endl;
     setPreviewItemEnabledAt(location, true);
+    cout << "return" << endl;
     return temp3;
+
 
 }
 
@@ -99,7 +102,7 @@ void PreviewArea::setPreviewItemAt(int location, QPixmap temp)
 
 void PreviewArea::setPreviewItemEnabledAt(int location, bool enabled)
 {
-    /*
+    ///*
     cout << "Setting enabled at " << location << endl;
     enabled=true;
 
@@ -108,12 +111,15 @@ void PreviewArea::setPreviewItemEnabledAt(int location, bool enabled)
     temp2->setFrameShape(QFrame::Box);
     QWidget *temp3 = new QWidget(temp2);
     layout->insertWidget(location, temp3);
+    cout << "success" << endl;
 
+
+    /*
     QWidget *uno = layout->takeAt(location-1)->widget();
     QLabel *dos = qobject_cast<QLabel *>(uno);
     //dos->setFrameShape(QFrame::Box);
     QWidget *tres = new QWidget(dos);
-    layout->insertWidget(location-1, tres);
+    layout->insertWidget((location-1)%10, tres);
     cout << "disabling border of " << location-1 << endl;
     */
 
@@ -128,7 +134,7 @@ void PreviewArea::deletePreviewItemAt(int location)
 //Public slots
 void PreviewArea :: startAnimation(int timerInterval)
 {
-
+    int temp = timerInterval;
     timer->start(2000);
 }
 
