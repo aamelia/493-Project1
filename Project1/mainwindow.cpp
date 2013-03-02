@@ -21,9 +21,11 @@ MainWindow::MainWindow(QWidget *parent)
     QHBoxLayout *imgLayout = new QHBoxLayout;
     mainImage = new QLabel;
     mainImage->setScaledContents(true);
-    mainImage->setMaximumSize(350,350);
+    mainImage->setMaximumSize(375,375);
+
     //mainImage->setSizePolicy(Qt::KeepAspectRatioByExpanding, Qt::KeepAspectRatioByExpanding);
-    //mainImage->setSizePolicy();
+    //mainImage->setSizePolicy()
+    //mainImage->setSizePolicy(Qt::PreferredSize, Qt::PreferredSize);
     imgLayout->addWidget(mainImage);
     imageWidget->setLayout(imgLayout);
 
@@ -33,6 +35,7 @@ MainWindow::MainWindow(QWidget *parent)
     leftPanelLayout->addWidget(leftPanel);
     leftPanelContainer = new QWidget();
     leftPanelContainer->setMinimumWidth(150);
+    leftPanelContainer->setMaximumWidth(200);
     leftPanelContainer->setLayout(leftPanelLayout);
 
     //Set up the bottom PreviewArea
@@ -45,24 +48,33 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     //Building the layout of the window
-    QSplitter *splitter1 = new QSplitter(Qt::Horizontal, this);
-    splitter1->addWidget(leftPanelContainer);
-    splitter1->addWidget(imageWidget);
-    splitter1->setOpaqueResize(true);
-    splitter1->setChildrenCollapsible(true);
-    QList<int> tempList;
-    tempList.insert(0, 500);
-    tempList.insert(0, 200);
-    splitter1->setSizes(tempList);
+    ///QSplitter *splitter1 = new QSplitter(Qt::Horizontal, this);
+    ///splitter1->addWidget(leftPanelContainer);
+    ///splitter1->addWidget(imageWidget);
+    ///splitter1->setOpaqueResize(true);
+    ///splitter1->setChildrenCollapsible(true);
+    ///QList<int> tempList;
+    ///tempList.insert(0, 500);
+    ///tempList.insert(0, 200);
+    //splitter1->setSizes(tempList);
     //mainWindow size policy to prefered
 
     //allCollections = new vector<QStringList>;
-    QSplitter *splitter2 = new QSplitter(Qt::Vertical, this);
-    splitter2->addWidget(splitter1);
-    splitter2->addWidget(bottomContainer);
+    ///QSplitter *splitter2 = new QSplitter(Qt::Vertical, this);
+    ///splitter2->addWidget(splitter1);
+    ///splitter2->addWidget(bottomContainer);
 
-    setCentralWidget(splitter2);
+    QGridLayout *theGrid = new QGridLayout();
+    theGrid->addWidget(leftPanelContainer, 0, 0);
+    theGrid->addWidget(mainImage, 0, 1);
+    theGrid->addWidget(bottomContainer, 1, 0, 1, 2);
 
+    QWidget *theBiggest = new QWidget();
+    theBiggest->setLayout(theGrid);
+
+    //setCentralWidget(splitter2);
+    setCentralWidget(theBiggest);
+    //setLayout(theGrid);
     createFlickr();
     createMenus();
     this->setMenuBar(menuBar);
