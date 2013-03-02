@@ -20,14 +20,13 @@ MainWindow::MainWindow(QWidget *parent)
 
     QHBoxLayout *imgLayout = new QHBoxLayout;
     mainImage = new QLabel;
-    //mainImage->setMaximumSize(350, 350);
     mainImage->setScaledContents(true);
-
     mainImage->setMaximumSize(350,350);
+    //mainImage->setSizePolicy(Qt::KeepAspectRatioByExpanding, Qt::KeepAspectRatioByExpanding);
+    //mainImage->setSizePolicy();
     imgLayout->addWidget(mainImage);
     imageWidget->setLayout(imgLayout);
-    //imageWidget->setFixedSize(400,400);
-    //imageWidget->setMaximumSize(400,400);
+
     //imageWidget->setSizePolicy(QSizePolicy::Expanding);
 
     QVBoxLayout *leftPanelLayout = new QVBoxLayout();
